@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public final class UiSkinFactory {
@@ -30,8 +31,8 @@ public final class UiSkinFactory {
         labelStyle.fontColor = Color.WHITE;
         skin.add("default", labelStyle);
 
-        TextureRegionDrawable up = new TextureRegionDrawable(new TextureRegion(tex)).tint(new Color(0.20f, 0.22f, 0.30f, 1f));
-        TextureRegionDrawable down = new TextureRegionDrawable(new TextureRegion(tex)).tint(new Color(0.14f, 0.16f, 0.24f, 1f));
+        Drawable up = new TextureRegionDrawable(new TextureRegion(tex)).tint(new Color(0.20f, 0.22f, 0.30f, 1f));
+        Drawable down = new TextureRegionDrawable(new TextureRegion(tex)).tint(new Color(0.14f, 0.16f, 0.24f, 1f));
 
         TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
         buttonStyle.up = up;
