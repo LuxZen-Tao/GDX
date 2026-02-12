@@ -2,6 +2,7 @@ package com.javabar.gdx.swingcompat;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.javabar.gdx.JavaBarGdxGame;
 
 public class Lwjgl3Launcher {
     public static void main(String[] args) {
