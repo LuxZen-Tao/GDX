@@ -31,6 +31,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
         TextButton newGame = new TextButton("New Game", skin);
         TextButton loadGame = new TextButton("Load Game", skin);
+        TextButton enhancedDemo = new TextButton("Enhanced UI Demo", skin);
         loadGame.setDisabled(!game.simBridge().hasSave());
 
         newGame.addListener(e -> {
@@ -62,10 +63,18 @@ public class MainMenuScreen extends ScreenAdapter {
             return true;
         });
 
+        enhancedDemo.addListener(e -> {
+            if (!enhancedDemo.isPressed()) return false;
+            game.simBridge().startNewGame();
+            game.setScreen(new EnhancedGameScreen(game));
+            return true;
+        });
+
         Table row = new Table();
         row.defaults().pad(10).width(240).height(55);
         row.add(newGame);
         row.add(loadGame);
+        row.add(enhancedDemo);
         root.add(row);
         stage.addActor(root);
     }
