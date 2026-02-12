@@ -8,9 +8,13 @@ Main project is in `gdx-template/`.
 
 New to libGDX? Coming from Unity? We've got you covered!
 
-- **[LibGDX UI Guide](LIBGDX_UI_GUIDE.md)** - Comprehensive tutorial showing how to connect UI to simulation logic, with examples for Unity developers
-- **[Quick Reference](LIBGDX_QUICK_REFERENCE.md)** - Handy cheat sheet for common UI tasks
-- **[Implementation Summary](IMPLEMENTATION_SUMMARY.md)** - Overview of the architecture and working example
+### Getting Started
+- **[🎓 First Screen Tutorial](TUTORIAL_FIRST_SCREEN.md)** - Step-by-step guide to create your first UI screen (Start here!)
+
+### In-Depth Guides
+- **[📖 LibGDX UI Guide](LIBGDX_UI_GUIDE.md)** - Comprehensive tutorial showing how to connect UI to simulation logic, with examples for Unity developers
+- **[⚡ Quick Reference](LIBGDX_QUICK_REFERENCE.md)** - Handy cheat sheet for common UI tasks
+- **[🏗️ Implementation Summary](IMPLEMENTATION_SUMMARY.md)** - Overview of the architecture and working example
 
 ### 🎮 Try the Enhanced UI Demo
 
