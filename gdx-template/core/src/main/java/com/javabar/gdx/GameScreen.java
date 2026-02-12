@@ -2,9 +2,7 @@ package com.javabar.gdx;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -31,7 +29,7 @@ public class GameScreen extends ScreenAdapter {
         this.stage = new Stage(new ScreenViewport());
         this.skin = UiSkinFactory.createBasicSkin();
         this.batch = new SpriteBatch();
-        this.background = createBackgroundTexture();
+        this.background = new Texture(Gdx.files.internal("libgdx.png"));
 
         Table root = new Table();
         root.setFillParent(true);
@@ -81,15 +79,6 @@ public class GameScreen extends ScreenAdapter {
 
         stage.addActor(root);
         refreshHud();
-    }
-
-    private Texture createBackgroundTexture() {
-        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-        pixmap.setColor(new Color(0.08f, 0.10f, 0.14f, 1f));
-        pixmap.fill();
-        Texture texture = new Texture(pixmap);
-        pixmap.dispose();
-        return texture;
     }
 
     private void refreshHud() {

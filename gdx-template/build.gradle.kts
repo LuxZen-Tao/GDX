@@ -15,13 +15,17 @@ allprojects {
 subprojects {
     apply(plugin = "java")
 
-    java {
+    extensions.configure<JavaPluginExtension> {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(17))
+        }
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
 
     tasks.withType<JavaCompile>().configureEach {
         options.encoding = "UTF-8"
+        options.release.set(17)
     }
 }
 
@@ -36,7 +40,7 @@ project(":lwjgl3") {
     apply(plugin = "application")
 
     extensions.configure<JavaApplication> {
-        mainClass.set("Lwjgl3Launcher")
+        mainClass.set("com.javabar.gdx.swingcompat.Lwjgl3Launcher")
     }
 
     dependencies {
