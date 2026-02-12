@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public class AudioManager {
     enum ChatterBand { LOW, MED, HIGH }
 

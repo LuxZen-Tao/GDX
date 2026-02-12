@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public enum TransactionType {
     UPGRADE,
     SUPPLIER_INVOICE,

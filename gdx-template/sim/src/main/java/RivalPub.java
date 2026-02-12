@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public final class RivalPub {
     private final String name;
     private final int priceAggression; // 0..2

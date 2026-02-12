@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 import java.io.IOException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

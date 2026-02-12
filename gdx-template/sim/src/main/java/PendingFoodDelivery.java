@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public record PendingFoodDelivery(
         Food food,
         int quantity,

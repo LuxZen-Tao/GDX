@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;

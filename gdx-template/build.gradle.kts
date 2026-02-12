@@ -51,5 +51,6 @@ project(":lwjgl3") {
 
     tasks.named<JavaExec>("run") {
         workingDir = rootProject.file("assets")
+        jvmArgs("--enable-native-access=ALL-UNNAMED")
     }
 }

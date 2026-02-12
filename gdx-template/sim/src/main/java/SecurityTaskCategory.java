@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public enum SecurityTaskCategory {
     SOFT("Soft"),
     BALANCED("Balanced"),

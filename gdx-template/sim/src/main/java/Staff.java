@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 // Staff.java
 import java.util.Random;
 

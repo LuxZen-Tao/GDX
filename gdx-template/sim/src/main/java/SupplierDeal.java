@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public class SupplierDeal  implements java.io.Serializable {
 
     public enum Type { DISCOUNT, SHORTAGE }

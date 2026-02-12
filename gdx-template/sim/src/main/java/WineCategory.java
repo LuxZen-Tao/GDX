@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public enum WineCategory {
     CHEAP_HOUSE("Cheap house"),
     MID_TIER_CLASSIC("Mid-tier classic"),

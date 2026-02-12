@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public record LandlordActionEffectRange(
         int repMin,
         int repMax,

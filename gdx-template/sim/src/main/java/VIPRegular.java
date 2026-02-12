@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 import java.util.EnumSet;
 import java.util.List;
 

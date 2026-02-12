@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public enum LandlordActionId {
     WORK_THE_ROOM,
     RUN_A_SPECIAL,

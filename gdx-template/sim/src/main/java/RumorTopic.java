@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public enum RumorTopic {
     STAFF_GOSSIP("Staff gossip", RumorSource.STAFF),
     STAFF_THEFT("Theft accusations", RumorSource.STAFF),

@@ -1,9 +1,15 @@
+package com.javabar.sim;
+
 // GameFactory.java
 import java.util.List;
 
 public class GameFactory {
 
     public static GameState newGame() {
+        return newGame(System.currentTimeMillis());
+    }
+
+    public static GameState newGame(long seed) {
         List<Wine> supplier = List.of(
                 new Wine("Crisp & Fruity Blanco", 2024, "England", 0.9, 3.0,
                         WineCategory.CHEAP_HOUSE, 1.30, Punter.Tier.LOWLIFE, 2),
@@ -61,6 +67,7 @@ public class GameFactory {
         s.reportStartCash = s.cash;
         s.reportStartDebt = s.totalCreditBalance();
 
+        s.random.setSeed(seed);
         return s;
     }
 }

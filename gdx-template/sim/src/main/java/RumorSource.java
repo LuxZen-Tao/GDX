@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public enum RumorSource {
     /** A single punter or punter chatter. */
     PUNTER,

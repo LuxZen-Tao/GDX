@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 import java.util.UUID;
 
 public class PaydayBill  implements java.io.Serializable {

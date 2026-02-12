@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public record MusicEffects(
         double trafficMultiplier,
         double spendMultiplier,

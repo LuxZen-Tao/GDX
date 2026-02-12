@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public class LegacyBonuses  implements java.io.Serializable {
 
     public int inventoryCapBonus = 0;

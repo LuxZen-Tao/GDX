@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public class SimBridge {
     private GameState gameState;
     private Simulation simulation;

@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public class LandlordActionState  implements java.io.Serializable {
     private int cooldownRemaining;
     private int lastUsedRound;

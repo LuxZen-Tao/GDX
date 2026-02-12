@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public class EconomySystem {
 
     private final GameState s;

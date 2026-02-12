@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public record GameModifierSnapshot(
         double seasonTrafficMultiplier,
         double rivalTrafficMultiplier,

@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public class SupplierTradeCredit  implements java.io.Serializable {
     private double balance;
     private double penaltyAddOnApr;

@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public enum Bank {
     TOWNLAND("Bank of Townland", 1500, 3000, 0.05, 0.08, 0, "Conservative, forgiving"),
     SANTNERE("Santnere", 2000, 4000, 0.07, 0.10, 0, "Flexible, slightly riskier"),

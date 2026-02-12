@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public enum Rumor {
 
     WATERED_DOWN_DRINKS(

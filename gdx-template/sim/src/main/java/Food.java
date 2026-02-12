@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public class Food  implements java.io.Serializable {
     private final String name;
     private final double baseCost;

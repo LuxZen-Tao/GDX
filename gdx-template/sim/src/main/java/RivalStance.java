@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public enum RivalStance {
     PRICE_WAR,
     QUALITY_PUSH,

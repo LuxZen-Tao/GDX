@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public class LandlordActionDef {
     private final LandlordActionId id;
     private final int tier;

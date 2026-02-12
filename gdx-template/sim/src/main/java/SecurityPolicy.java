@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public enum SecurityPolicy {
     FRIENDLY_WELCOME("Friendly Welcome", "F", -1, 1.08, 1.04,
             "Easygoing door, lively crowd."),
