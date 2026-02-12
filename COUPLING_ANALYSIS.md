@@ -205,3 +205,67 @@ The current issues won't break the build but could cause confusion during develo
 **Action Required:** Fix the two import statements in GameScreen.java and EnhancedGameScreen.java.
 
 **Optional Improvements:** Add documentation and consider renaming to make the architecture more explicit.
+
+## UPDATED ANALYSIS (After Deeper Investigation)
+
+### The Real Issue: Unused Duplicate Class
+
+After detailed investigation, the actual problem is **simpler but more subtle**:
+
+**The `com.javabar.gdx.PresentationSnapshot` class is DEAD CODE** - it exists but is never used anywhere in the codebase.
+
+#### What Actually Happens:
+
+1. `JavaBarGdxGame` instantiates:
+   - `new SimBridge()` → uses `com.javabar.gdx.SimBridge` ✓
+   - `new AudioSettings()` → uses `com.javabar.gdx.AudioSettings` ✓
+
+2. `com.javabar.gdx.SimBridge` imports `com.javabar.sim.PresentationSnapshot` (line 9)
+
+3. When `SimBridge.snapshot()` returns `new PresentationSnapshot(...)`, it creates the **sim version**, not the gdx version!
+
+4. All UI screens (`GameScreen`, `EnhancedGameScreen`) correctly import `com.javabar.sim.PresentationSnapshot`
+
+5. The `com.javabar.gdx.PresentationSnapshot` class is compiled but **never instantiated or imported**
+
+#### Why This Happened:
+
+The gdx version of PresentationSnapshot was likely created initially but then the design changed to use the sim version directly. The unused class was never removed.
+
+### Corrected Recommendations
+
+#### 1. Remove Unused Class (Required)
+
+Delete the file: `core/src/main/java/com/javabar/gdx/PresentationSnapshot.java`
+
+This class serves no purpose and only creates confusion.
+
+#### 2. Keep Existing Imports (No Changes Needed)
+
+The current imports are **correct**:
+- `GameScreen.java`: `import com.javabar.sim.PresentationSnapshot;` ✓
+- `EnhancedGameScreen.java`: `import com.javabar.sim.PresentationSnapshot;` ✓
+- `SimBridge.java`: `import com.javabar.sim.PresentationSnapshot;` ✓
+
+#### 3. Keep Adapter Classes
+
+These classes ARE used and serve important purposes:
+- `com.javabar.gdx.SimBridge` - Adds save/load functionality ✓
+- `com.javabar.gdx.AudioSettings` - Manages audio lifecycle ✓
+
+### Final Architecture (After Fix)
+
+```
+core (LibGDX UI Layer):
+  ✓ SimBridge (gdx) - UI adapter with persistence
+  ✓ AudioSettings (gdx) - UI audio lifecycle manager
+  ✗ PresentationSnapshot (gdx) - UNUSED, should be deleted
+  ✓ Uses sim.PresentationSnapshot directly
+  
+sim (Simulation Engine):
+  ✓ SimBridge (sim) - Basic simulation control
+  ✓ AudioSettings (sim) - Audio data container
+  ✓ PresentationSnapshot (sim) - DTO used by both layers
+```
+
+This is the **correct** design - the UI layer adds adapters for UI-specific functionality but uses the sim's DTO directly for data transfer.
