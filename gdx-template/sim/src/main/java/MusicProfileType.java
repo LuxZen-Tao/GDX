@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public enum MusicProfileType {
     ACOUSTIC_CHILL("Acoustic Chill"),
     INDIE_ALT("Indie Alt"),

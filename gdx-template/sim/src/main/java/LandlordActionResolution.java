@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public record LandlordActionResolution(
         LandlordActionDef def,
         boolean success,

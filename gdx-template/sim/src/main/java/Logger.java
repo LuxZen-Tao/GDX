@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 // Logger.java
 public interface Logger {
     void info(String s);

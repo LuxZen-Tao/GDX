@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public class LoanSharkAccount  implements java.io.Serializable {
     private boolean open;
     private double balance;

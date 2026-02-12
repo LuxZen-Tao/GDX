@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public class AudioSettings {
     private float musicVolume = 0.7f;
     private float chatterVolume = 0.6f;

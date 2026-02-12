@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public enum PubIdentity {
     NEUTRAL("neutral", 1.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00),
     RESPECTABLE("respectable", 1.10, 0.35, 0.30, 0.10, 0.02, 0.85, 0.50),

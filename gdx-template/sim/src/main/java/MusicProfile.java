@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public record MusicProfile(
         double trafficMultiplier,
         double spendMultiplier,

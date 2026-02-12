@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public enum VIPArchetype {
     SOCIAL_BUTTERFLY,
     CONNOISSEUR,

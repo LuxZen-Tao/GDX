@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public enum FoodCategory {
     CHEAP_BAR_FOOD("Cheap bar food"),
     MID_QUALITY_MEAL("Mid-quality meal"),

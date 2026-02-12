@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public class CreditLine  implements java.io.Serializable {
     private final String id;
     private final String lenderName;

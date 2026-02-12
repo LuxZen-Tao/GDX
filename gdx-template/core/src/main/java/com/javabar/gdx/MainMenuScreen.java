@@ -3,79 +3,82 @@ package com.javabar.gdx;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MainMenuScreen extends ScreenAdapter {
     private final JavaBarGdxGame game;
     private final Stage stage;
     private final Skin skin;
+    private final Texture bg;
 
     public MainMenuScreen(JavaBarGdxGame game) {
         this.game = game;
         this.stage = new Stage(new ScreenViewport());
         this.skin = UiSkinFactory.createBasicSkin();
+        this.bg = new Texture(Gdx.files.internal("libgdx.png"));
 
-        Table table = new Table();
-        table.setFillParent(true);
-        table.defaults().pad(8);
+        game.audioSettings().resetForMenu();
 
-        Label title = new Label("JavaBarSim - libGDX Starter", skin);
+        Table root = new Table();
+        root.setFillParent(true);
+        root.bottom().padBottom(96);
+
         TextButton newGame = new TextButton("New Game", skin);
-        TextButton loadGame = new TextButton("Load Game (stub)", skin);
-        Label info = new Label("", skin);
+        TextButton loadGame = new TextButton("Load Game", skin);
+        loadGame.setDisabled(!game.simBridge().hasSave());
 
-        newGame.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.simBridge().newGame();
-                game.setScreen(new GameScreen(game));
-                dispose();
+        newGame.addListener(e -> {
+            if (!newGame.isPressed()) return false;
+            if (game.simBridge().hasSave()) {
+                Dialog d = new Dialog("Confirm", skin) {
+                    @Override protected void result(Object object) {
+                        if (Boolean.TRUE.equals(object)) {
+                            game.simBridge().startNewGame();
+                            game.setScreen(new LoadingScreen(game));
+                        }
+                    }
+                };
+                d.text("Overwrite existing save?");
+                d.button("Yes", true);
+                d.button("No", false);
+                d.show(stage);
+            } else {
+                game.simBridge().startNewGame();
+                game.setScreen(new LoadingScreen(game));
             }
+            return true;
         });
 
-        loadGame.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                info.setText("Load hook not wired yet.");
-            }
+        loadGame.addListener(e -> {
+            if (!loadGame.isPressed() || loadGame.isDisabled()) return false;
+            game.simBridge().loadGame();
+            game.setScreen(new LoadingScreen(game));
+            return true;
         });
 
-        table.add(title).row();
-        table.add(newGame).width(260).row();
-        table.add(loadGame).width(260).row();
-        table.add(info).row();
-
-        stage.addActor(table);
+        Table row = new Table();
+        row.defaults().pad(10).width(240).height(55);
+        row.add(newGame);
+        row.add(loadGame);
+        root.add(row);
+        stage.addActor(root);
     }
 
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(stage);
-    }
-
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0.07f, 0.08f, 0.10f, 1f);
+    @Override public void show() { Gdx.input.setInputProcessor(stage); }
+    @Override public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        game.batch().begin();
+        game.batch().draw(bg,0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        game.batch().end();
         stage.act(delta);
         stage.draw();
     }
-
-    @Override
-    public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
-        skin.dispose();
-    }
+    @Override public void resize(int w,int h){stage.getViewport().update(w,h,true);}    
+    @Override public void dispose(){stage.dispose();skin.dispose();bg.dispose();}
 }

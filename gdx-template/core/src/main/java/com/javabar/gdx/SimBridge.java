@@ -1,85 +1,129 @@
 package com.javabar.gdx;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.Base64Coder;
+import com.badlogic.gdx.utils.Json;
+import com.javabar.sim.GameFactory;
+import com.javabar.sim.GameState;
+import com.javabar.sim.PresentationSnapshot;
+import com.javabar.sim.Simulation;
+import com.javabar.sim.UILogger;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+/** Thin UI-to-simulation adapter for libGDX screens. */
 public class SimBridge {
-    private double money = 2500;
-    private double debt = 0;
-    private int reputation = 50;
-    private double chaos = 5;
-    private boolean serviceOpen;
-    private int week = 1;
-    private int day = 1;
-    private int round;
-    private int traffic = 10;
+    private static final int SAVE_VERSION = 1;
+    private static final String SAVE_FILE = "savegame.json";
 
-    private int unservedLastTick;
-    private int refundsLastTick;
-    private int fightsLastTick;
+    private GameState state;
+    private Simulation simulation;
+    private UILogger logger;
 
-    public SimBridge() {
-        newGame();
+    public void startNewGame() {
+        startNewGame(System.currentTimeMillis());
     }
 
-    public void newGame() {
-        money = 2500;
-        debt = 0;
-        reputation = 50;
-        chaos = 5;
-        serviceOpen = false;
-        week = 1;
-        day = 1;
-        round = 0;
-        traffic = 10;
-        unservedLastTick = 0;
-        refundsLastTick = 0;
-        fightsLastTick = 0;
+    public void startNewGame(long seed) {
+        state = GameFactory.newGame(seed);
+        logger = new UILogger();
+        simulation = new Simulation(state, logger);
     }
 
-    public void openService() {
-        serviceOpen = true;
+    public boolean hasSave() {
+        return Gdx.files.local(SAVE_FILE).exists();
     }
 
-    public void closeService() {
-        serviceOpen = false;
+    public String saveGame() {
+        ensureLive();
+        SaveEnvelope envelope = new SaveEnvelope();
+        envelope.saveVersion = SAVE_VERSION;
+        envelope.seed = state.random.nextLong();
+        envelope.payload = serializeState(state);
+        Json json = new Json();
+        Gdx.files.local(SAVE_FILE).writeString(json.toJson(envelope), false, "UTF-8");
+        return "Saved!";
     }
 
-    public void advanceTick() {
-        if (!serviceOpen) {
-            openService();
+    public String loadGame() {
+        FileHandle handle = Gdx.files.local(SAVE_FILE);
+        if (!handle.exists()) {
+            return "No save found.";
         }
-        round++;
-
-        unservedLastTick = round % 3;
-        refundsLastTick = round % 2;
-        fightsLastTick = round % 4 == 0 ? 1 : 0;
-
-        traffic = Math.max(0, 8 + reputation / 10 - (int) chaos + (round % 5));
-        money += traffic * 12 - refundsLastTick * 8 - fightsLastTick * 15;
-        chaos = Math.max(0, chaos + (fightsLastTick > 0 ? 0.8 : -0.2));
-        reputation = Math.max(0, Math.min(100, reputation + 1 - fightsLastTick));
-
-        if (round % 7 == 0) {
-            day++;
-            if (day > 7) {
-                day = 1;
-                week++;
+        try {
+            Json json = new Json();
+            SaveEnvelope envelope = json.fromJson(SaveEnvelope.class, handle);
+            if (envelope == null || envelope.saveVersion != SAVE_VERSION || envelope.payload == null) {
+                return "Save file is incompatible.";
             }
+            state = deserializeState(envelope.payload);
+            logger = new UILogger();
+            simulation = new Simulation(state, logger);
+            return "Loaded.";
+        } catch (Exception ex) {
+            return "Save file is corrupt.";
         }
+    }
+
+    public void openService() { ensureLive(); simulation.openNight(); }
+    public void closeService() { ensureLive(); simulation.closeNight("Manual close"); }
+
+    public void advance() {
+        ensureLive();
+        if (!state.nightOpen) simulation.openNight();
+        simulation.playRound();
     }
 
     public PresentationSnapshot snapshot() {
+        ensureLive();
         return new PresentationSnapshot(
-                money,
-                debt,
-                reputation,
-                chaos,
-                serviceOpen,
-                week,
-                day,
-                round,
-                traffic,
-                unservedLastTick,
-                refundsLastTick,
-                fightsLastTick
+                state.cash,
+                state.totalCreditBalance(),
+                state.reputation,
+                state.chaos,
+                state.nightOpen,
+                state.weekCount,
+                state.dayIndex + 1,
+                state.roundInNight,
+                state.nightPunters.size(),
+                state.nightUnserved,
+                state.nightRefunds,
+                state.nightFights
         );
+    }
+
+    private void ensureLive() {
+        if (simulation == null) startNewGame();
+    }
+
+    private static String serializeState(GameState gameState) {
+        try (ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+             ObjectOutputStream out = new ObjectOutputStream(bytes)) {
+            out.writeObject(gameState);
+            out.flush();
+            return String.valueOf(Base64Coder.encode(bytes.toByteArray()));
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private static GameState deserializeState(String payload) {
+        byte[] bytes = Base64Coder.decode(payload);
+        try (ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bytes))) {
+            return (GameState) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public static class SaveEnvelope {
+        public int saveVersion;
+        public long seed;
+        public String payload;
     }
 }

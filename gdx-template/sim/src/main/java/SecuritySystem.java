@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 // SecuritySystem.java
 public class SecuritySystem {
     public static final double SECURITY_UPKEEP_PER_LEVEL = 1.575;

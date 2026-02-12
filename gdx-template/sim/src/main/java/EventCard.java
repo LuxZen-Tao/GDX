@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public record EventCard(
         String title,
         String body,

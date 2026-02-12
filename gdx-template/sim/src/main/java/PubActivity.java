@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public enum PubActivity {
 
     // label, cost, trafficBonusPct, capacityBonus, repInstantDelta, eventBonusChance, riskBonusPct, tipBonusPct, priceMultiplierPct,

@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 import java.util.UUID;
 
 public class SupplierInvoice  implements java.io.Serializable {

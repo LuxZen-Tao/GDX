@@ -6,10 +6,14 @@ import com.javabar.gdx.JavaBarGdxGame;
 
 public class Lwjgl3Launcher {
     public static void main(String[] args) {
-        Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-        config.setTitle("JavaBarSim libGDX Starter");
-        config.setWindowedMode(1280, 720);
-        config.useVsync(true);
-        new Lwjgl3Application(new JavaBarGdxGame(), config);
+        new Lwjgl3Application(new JavaBarGdxGame(), config());
+    }
+
+    private static Lwjgl3ApplicationConfiguration config() {
+        Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
+        cfg.setTitle("Barva");
+        cfg.setWindowedMode(1280, 720);
+        cfg.useVsync(true);
+        return cfg;
     }
 }

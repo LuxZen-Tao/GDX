@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public record VIPNightOutcome(
         int unservedCount,
         int fightCount,

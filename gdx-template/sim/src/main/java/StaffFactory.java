@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 import java.util.Random;
 
 public class StaffFactory {

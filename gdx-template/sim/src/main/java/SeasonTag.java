@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public enum SeasonTag {
     TOURIST_WAVE,
     EXAM_SEASON,

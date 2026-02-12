@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public record PendingSupplierDelivery(
         Wine wine,
         int quantity,

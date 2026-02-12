@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 import java.util.*;
 import java.util.function.Consumer;
 

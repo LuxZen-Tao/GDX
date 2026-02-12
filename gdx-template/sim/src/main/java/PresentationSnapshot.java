@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public record PresentationSnapshot(
         double money,
         double debt,

@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.LinkedHashSet;

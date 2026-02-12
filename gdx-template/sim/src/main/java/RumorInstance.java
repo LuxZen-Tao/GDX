@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public record RumorInstance(
         Rumor type,
         RumorSource source,

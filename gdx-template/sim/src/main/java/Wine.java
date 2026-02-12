@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 // Wine.java
 public class Wine  implements java.io.Serializable {
     private final String name;

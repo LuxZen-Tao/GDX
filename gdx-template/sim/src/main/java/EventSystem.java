@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 // EventSystem.java
 public class EventSystem {
 

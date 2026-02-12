@@ -1,3 +1,5 @@
+package com.javabar.sim;
+
 public record FoodOrder(
         int punterId,
         String punterName,
